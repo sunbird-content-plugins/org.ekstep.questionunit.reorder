@@ -1,20 +1,20 @@
 /**
  *
- * Question Unit plugin to render a FTB question
- * @class org.ekstep.questionunit.ftb
+ * Question Unit plugin to render a reordering question
+ * @class org.ekstep.questionunit.reorder
  * @extends org.ekstep.contentrenderer.questionUnitPlugin
  * @author Gourav More <gourav_m@tekditechnologies.com>
  */
-org.ekstep.questionunitFTB = {};
-org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionUnitPlugin.extend({
-  _type: 'org.ekstep.questionunit.ftb',
+org.ekstep.questionunitReorder = {};
+org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.questionUnitPlugin.extend({
+  _type: 'org.ekstep.questionunit.reorder',
   _isContainer: true,
   _render: true,
   _userWords: [],
   /**
-   * renderer:questionunit.ftb:showEventListener.
-   * @event renderer:questionunit.ftb:show
-   * @memberof org.ekstep.questionunit.ftb
+   * renderer:questionunit.reorder:showEventListener.
+   * @event renderer:questionunit.reorder:show
+   * @memberof org.ekstep.questionunit.reorder
    */
   setQuestionTemplate: function () {
     console.log(this._question.data.question);
@@ -22,7 +22,7 @@ org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionU
   },
   /**
    * Listen show event
-   * @memberof org.ekstep.questionunit.ftb
+   * @memberof org.ekstep.questionunit.reorder
    * @param {Object} event from question set.
    */
   preQuestionShow: function (event) {
@@ -32,7 +32,7 @@ org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionU
   },
   /**
    * function to handle tabs(words) onclick event
-   * @memberof org.ekstep.questionunit.ftb
+   * @memberof org.ekstep.questionunit.reorder
    * @param {Object} event from question set.
    */
   onWordSelect: function (id) {
@@ -40,20 +40,20 @@ org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionU
       id: $("#" + id).attr('id'),
       text: $("#" + id).text().trim()
     });
-    $('#tarea').text(_.map(this._userWords, function (w) {
+    $('#reorder-tarea').text(_.map(this._userWords, function (w) {
       return w.text;
     }).join(' '));
   },
 
   /**
    * function to handle backspace onclick event
-   * @memberof org.ekstep.questionunit.ftb
+   * @memberof org.ekstep.questionunit.reorder
    */
   onBackspaceClick: function () {
     var deleted = this._userWords.pop();
     if (deleted) {
-      $('#' + deleted.id).removeClass('active remove-shadow');
-      $('#tarea').text(_.map(this._userWords, function (w) {
+      $('#' + deleted.id).removeClass('reorder-active reorder-remove-shadow');
+      $('#reorder-tarea').text(_.map(this._userWords, function (w) {
         return w.text;
       }).join(' '));
     }
@@ -61,47 +61,24 @@ org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionU
 
   /**
    * Listen event after display the question
-   * @memberof org.ekstep.questionunit.ftb
+   * @memberof org.ekstep.questionunit.reorder
    * @param {Object} event from question set.
    */
   postQuestionShow: function (event) { // eslint-disable-line no-unused-vars
     ReorderingController.question = this._question; // eslint-disable-line no-undef
-
-    $(ReorderingController.constant.qsFtbElement).off('click'); // eslint-disable-line no-undef
-    $(ReorderingController.constant.qsFtbElement).on('click', '.ans-field', ReorderingController.invokeKeyboard); // eslint-disable-line no-undef
-
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESS); // eslint-disable-line no-undef
   },
   /**
-   * Hides the keyboard
-   * @memberof org.ekstep.questionunit.ftb
-   * @param {Object} event from question set.
-   */
-  postHideQuestion: function () {
-    EkstepRendererAPI.dispatchEvent("org.ekstep.keyboard:hide");
-  },
-  /**
-   * renderer:questionunit.ftb:evaluateEventListener.
-   * @event renderer:questionunit.ftb:evaluate
+   * renderer:questionunit.reorder:evaluateEventListener.
+   * @event renderer:questionunit.reorder:evaluate
    * @param {Object} event object from questionset
-   * @memberof org.ekstep.questionunit.ftb
+   * @memberof org.ekstep.questionunit.reorder
    */
   evaluateQuestion: function (event) {
     var telemetryAnsArr = [], //array have all answer
       correctAnswer = false,
       answerArray = [],
       numOfCorrectAns = 0;
-    //check for evalution
-    //get all text box value inside the class
-    // var textBoxCollection = $(ReorderingController.constant.qsFtbQuestion).find("input[type=text]"); // eslint-disable-line no-undef
-    // _.each(textBoxCollection, function (element, index) {
-    //   answerArray.push(element.value.toLowerCase().trim());
-    //   var key = "ans" + index; // eslint-disable-line no-unused-vars
-    //   ansObj = {
-    //     key: element.value
-    //   };
-    //   telemetryAnsArr.push(ansObj);
-    // });
 
     var userText = _.map(this._userWords, function (w) {
       return w.text;
@@ -111,14 +88,6 @@ org.ekstep.questionunitFTB.RendererPlugin = org.ekstep.contentrenderer.questionU
       correctAnswer = true;
       numOfCorrectAns = 1;
     }
-    // // Calculate partial score
-    // var tempCount = 0;
-    // _.each(this._question.data.answer, function (ans, index) { // eslint-disable-line no-undef
-    //   /*istanbul ignore else*/
-    //   if (ans.toLowerCase().trim() == answerArray[index].toLowerCase().trim()) {
-    //     tempCount++;
-    //   }
-    // });
 
     var partialScore = 1; // (tempCount / this._question.data.answer.length) * this._question.config.max_score; // eslint-disable-line no-undef
 

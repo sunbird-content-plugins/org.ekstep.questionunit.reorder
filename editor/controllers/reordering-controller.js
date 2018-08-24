@@ -1,6 +1,6 @@
 /*
  * Plugin to create reordering question
- * @class org.ekstep.questionunitmftb:reorderingQuestionFormController
+ * @class org.ekstep.questionunitreorder:reorderingQuestionFormController
  * Amit Dawar <amit.dawar@funtoot.com>
  */
 angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQuestionFormController', ['$scope', '$rootScope', 'questionServices', function ($scope, $rootScope, questionServices) { // eslint-disable-line no-unused-vars
@@ -51,7 +51,7 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
       type: 'TOUCH',
       id: 'input',
       target: {
-        id: 'questionunit-ftb-question',
+        id: 'questionunit-reorder-question',
         ver: '',
         type: 'input'
       }
@@ -63,33 +63,26 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
      * @event org.ekstep.questionunit.reordering:validateform
      * @memberof org.ekstep.questionunit.reordering.horizontal_controller
      */
-    EventBus.listeners['org.ekstep.questionunit.ftb:validateform'] = [];
-    $scope.ftbPluginInstance = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.questionunit.ftb");
-    ecEditor.addEventListener('org.ekstep.questionunit.ftb:validateform', function (event, callback) {
+    EventBus.listeners['org.ekstep.questionunit.reorder:validateform'] = [];
+    $scope.reorderPluginInstance = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.questionunit.reorder");
+    ecEditor.addEventListener('org.ekstep.questionunit.reorder:validateform', function (event, callback) {
       var validationRes = $scope.formValidation();
       callback(validationRes.isValid, validationRes.formData);
     }, $scope);
-    /**
-     * editor:questionunit.ftb:call form edit the question.
-     * @event org.ekstep.questionunit.ftb:editquestion
-     * @memberof org.ekstep.questionunit.ftb.horizontal_controller
-     */
-    EventBus.listeners['org.ekstep.questionunit.ftb:editquestion'] = [];
-    ecEditor.addEventListener('org.ekstep.questionunit.ftb:editquestion', $scope.editFtbQuestion, $scope);
-    //its indicating the controller is loaded in question unit
-    ecEditor.dispatchEvent("org.ekstep.questionunit:ready");
   }
   /**
    * check form validation
-   * @memberof org.ekstep.questionunit.ftb.horizontal_controller
+   * @memberof org.ekstep.questionunit.reorder.horizontal_controller
    * @returns {Object} question data.
    */
   $scope.formValidation = function () {
-    var ftbFormQuestionText, formValid, formConfig = {};
+    var reorderFormQuestionText,
+      reorderFormSentenceText,
+      formValid, formConfig = {};
     $scope.submitted = true;
-    ftbFormQuestionText = $scope.reorderingFormData.question.text;
-    ftbFormSentenceText = $scope.reorderingFormData.sentence.text;
-    formValid = (ftbFormQuestionText.length > 0) && (ftbFormSentenceText.length > 0);
+    reorderFormQuestionText = $scope.reorderingFormData.question.text;
+    reorderFormSentenceText = $scope.reorderingFormData.sentence.text;
+    formValid = (reorderFormQuestionText.length > 0) && (reorderFormSentenceText.length > 0);
     $('.reorderingQuestionBox').removeClass("ck-error");
     $('.sentenceBox').removeClass("ck-error");
     if (formValid) {
@@ -100,9 +93,9 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
     } else {
       formConfig.isValid = false;
       formConfig.formData = $scope.reorderingFormData;
-      if (ftbFormQuestionText.length === 0)
+      if (reorderFormQuestionText.length === 0)
         $('.reorderingQuestionBox').addClass("ck-error");
-      if (ftbFormSentenceText.length === 0)
+      if (reorderFormSentenceText.length === 0)
         $('.sentenceBox').addClass("ck-error");
     }
     return formConfig;
@@ -115,10 +108,10 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
   $scope.generateTelemetry = function (data) {
     if (data) {
       data.plugin = data.plugin || {
-        "id": $scope.ftbPluginInstance.id,
-        "ver": $scope.ftbPluginInstance.ver
+        "id": $scope.reorderPluginInstance.id,
+        "ver": $scope.reorderPluginInstance.ver
       }
-      data.form = data.form || 'question-creation-ftb-form';
+      data.form = data.form || 'question-creation-reorder-form';
       questionServices.generateTelemetry(data);
     }
   }

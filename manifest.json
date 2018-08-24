@@ -1,5 +1,5 @@
 {
-  "id": "org.ekstep.questionunit.ftb",
+  "id": "org.ekstep.questionunit.reorder",
   "ver": "1.0",
   "author": "Amit Dawar (amit.dawar@funtoot.com)",
   "title": "Reordering question",
@@ -27,8 +27,8 @@
   },
   "templates": [{
     "id": "reorderingtemplate",
-    "thumbnail": "editor/assets/reordering.png",
-    "title": "Reordering sentence",
+    "thumbnail": "editor/assets/reorder-preview.png",
+    "title": "Reordering words",
     "disc": "Arranging the words to form a sentence.",
     "category": "reordering",
     "editor": {
@@ -52,16 +52,9 @@
     ]
   },
   "dependencies": [{
-      "plugin": "org.ekstep.questionunit",
-      "ver": "1.0",
-      "type": "plugin",
-      "scope": "all"
-    },
-    {
-      "plugin": "org.ekstep.keyboard",
-      "ver": "1.0",
-      "type": "plugin",
-      "scope": "renderer"
-    }
-  ]
+    "plugin": "org.ekstep.questionunit",
+    "ver": "1.0",
+    "type": "plugin",
+    "scope": "all"
+  }]
 }
