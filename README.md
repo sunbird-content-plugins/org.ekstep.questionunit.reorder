@@ -1,2 +1,2 @@
-# org.ekstep.questionunit.reorderwords
-Plugin to reorder options in the question
+# org.ekstep.questionunit.reorder
+Plugin to reorder options in the question 
