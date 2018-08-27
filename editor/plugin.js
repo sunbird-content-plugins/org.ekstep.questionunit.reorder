@@ -1,6 +1,5 @@
-/**
- *
- * Plugin to create question
+/*
+ * Plugin to create reordering questions
  * @extends org.ekstep.contenteditor.basePlugin
  * @author Amit Dawar <amit.dawar@funtoot.com>
  */
