@@ -2,7 +2,7 @@
  *
  * Plugin to create question
  * @extends org.ekstep.contenteditor.basePlugin
- * @author Gourav More <gourav_m@tekditechnologies.com>
+ * @author Amit Dawar <amit.dawar@funtoot.com>
  */
 org.ekstep.questionunitReorder = {};
 org.ekstep.questionunitReorder.EditorPlugin = org.ekstep.contenteditor.questionUnitPlugin.extend({
