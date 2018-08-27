@@ -3,7 +3,7 @@
  * Question Unit plugin to render a reordering question
  * @class org.ekstep.questionunit.reorder
  * @extends org.ekstep.contentrenderer.questionUnitPlugin
- * @author Gourav More <gourav_m@tekditechnologies.com>
+ * @author Amit Dawar <amit.dawar@funtoot.com>
  */
 org.ekstep.questionunitReorder = {};
 org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.questionUnitPlugin.extend({
