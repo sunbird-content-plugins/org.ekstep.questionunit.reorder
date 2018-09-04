@@ -71,6 +71,15 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
       var validationRes = $scope.formValidation();
       callback(validationRes.isValid, validationRes.formData);
     }, $scope);
+    EventBus.listeners['org.ekstep.questionunit.reorder:editquestion'] = [];
+    ecEditor.addEventListener('org.ekstep.questionunit.reorder:editquestion', $scope.editReorderQuestion, $scope);
+    ecEditor.dispatchEvent("org.ekstep.questionunit:ready");
+  }
+  $scope.editReorderQuestion = function (event, data) {
+    var qdata = data.data;
+    $scope.reorderingFormData.question = qdata.question;
+    $scope.reorderingFormData.sentence = qdata.sentence;
+    $scope.$safeApply();
   }
   /**
    * check form validation
