@@ -6,21 +6,22 @@ ReorderingController.initTemplate = function (pluginInstance) {
 ReorderingController.getQuestionTemplate = function () {
   return '\
   <div class="reorder-screen reorder-table" onselectstart="return false">\
-    <div class="reorder-table reorder-header">\
-      <div class="reorder-question reorder-table-cell"><%= question.data.question.text %></div>\
-    </div>\
+    <div class="reorder-question">' +
+    org.ekstep.questionunit.questionComponent.generateQuestionComponent() +
+    '</div>\
     <div class="reorder-gutter1"></div>\
     <div class="reorder-table" id="reorder-editor">\
       <textarea class="reorder-table-cell" id="reorder-tarea" readonly></textarea>\
       <img class="reorder-table-cell" id="reorder-backspace" onclick="ReorderingController.backspaceClick()" src="<%=ReorderingController.pluginInstance.getAudioIcon("renderer/assets/backspace.png") %>">\
     </div>\
-    <div class="reorder-gutter2"></div>\
-    <div class="reorder-tabContainer">\
-    \
-    <% _.each(_.shuffle(question.data.sentence.tabs),function(val,key){ %>\
-      <span onclick="ReorderingController.wordClick(\'w<%= val.id %>\')" class="reorder-words-tabs" id="w<%= val.id %>"><%= val.text %></span>\
-    <% });%>\
-    \
+    <div class="reorder-table reorder-keyboard">\
+      <div class="reorder-table-cell">\
+        <div class="reorder-tabContainer reorder-scroll">\
+        <% _.each(_.shuffle(question.data.sentence.tabs),function(val,key){ %>\
+          <span onclick="ReorderingController.wordClick(\'w<%= val.id %>\')" class="reorder-words-tabs" id="w<%= val.id %>"><%= val.text %></span>\
+        <% });%>\
+        </div>\
+      </div>\
     </div>\
   </div>';
 }
