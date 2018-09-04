@@ -25,6 +25,8 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
       tabs: []
     }
   };
+  let temp = $scope.reorderingFormData.question.text;
+  $scope.reorderingFormData.question.text = (temp.length > 0) ? temp : 'Arrange the given words in proper order to form a sentence.'
   angular.element('.reorderingQuestionBox').on('change', function () {
     $scope.reorderingFormData.question.text = this.value;
   });
