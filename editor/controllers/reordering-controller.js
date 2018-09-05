@@ -27,8 +27,13 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
   };
   let temp = $scope.reorderingFormData.question.text;
   $scope.reorderingFormData.question.text = (temp.length > 0) ? temp : 'Arrange the given words in proper order to form a sentence.'
-  angular.element('.reorderingQuestionBox').on('change', function () {
-    $scope.reorderingFormData.question.text = this.value;
+  var questionInput = CKEDITOR.replace('reorderingQuestionBox', { // eslint-disable-line no-undef
+    customConfig: ecEditor.resolvePluginResource('org.ekstep.questionunit', '1.0', "editor/ckeditor-config.js"),
+    skin: 'moono-lisa,' + CKEDITOR.basePath + "skins/moono-lisa/", // eslint-disable-line no-undef
+    contentsCss: CKEDITOR.basePath + "contents.css" // eslint-disable-line no-undef
+  });
+  questionInput.on('change', function () {
+    $scope.reorderingFormData.question.text = this.getData();
   });
   $scope.updateSentence = function () {
     var sentence = $scope.reorderingFormData.sentence.text;
