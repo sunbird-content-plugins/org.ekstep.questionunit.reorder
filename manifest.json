@@ -30,7 +30,7 @@
     "thumbnail": "editor/assets/reorder-preview.png",
     "title": "Reordering words",
     "disc": "Arranging the words to form a sentence.",
-    "category": "reordering",
+    "category": "mcq",
     "editor": {
       "templateURL": "editor/templates/reordering-template.html",
       "controllerURL": "editor/controllers/reordering-controller.js",
