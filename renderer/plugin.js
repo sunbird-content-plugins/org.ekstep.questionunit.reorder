@@ -89,14 +89,12 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
       numOfCorrectAns = 1;
     }
 
-    var partialScore = 1; // (tempCount / this._question.data.answer.length) * this._question.config.max_score; // eslint-disable-line no-undef
-
     var result = {
       eval: correctAnswer,
       state: {
         val: answerArray
       },
-      score: partialScore,
+      score: correctAnswer ? 1 : 0,
       values: telemetryAnsArr,
       noOfCorrectAns: numOfCorrectAns, //tempCount,
       totalAns: 1
