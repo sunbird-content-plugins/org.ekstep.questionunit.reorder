@@ -25,8 +25,15 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
       tabs: []
     }
   };
-  angular.element('.reorderingQuestionBox').on('change', function () {
-    $scope.reorderingFormData.question.text = this.value;
+  let temp = $scope.reorderingFormData.question.text;
+  $scope.reorderingFormData.question.text = (temp.length > 0) ? temp : 'Arrange the given words in proper order to form a sentence.'
+  var questionInput = CKEDITOR.replace('reorderingQuestionBox', { // eslint-disable-line no-undef
+    customConfig: ecEditor.resolvePluginResource('org.ekstep.questionunit', '1.0', "editor/ckeditor-config.js"),
+    skin: 'moono-lisa,' + CKEDITOR.basePath + "skins/moono-lisa/", // eslint-disable-line no-undef
+    contentsCss: CKEDITOR.basePath + "contents.css" // eslint-disable-line no-undef
+  });
+  questionInput.on('change', function () {
+    $scope.reorderingFormData.question.text = this.getData();
   });
   $scope.updateSentence = function () {
     var sentence = $scope.reorderingFormData.sentence.text;
@@ -69,6 +76,15 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
       var validationRes = $scope.formValidation();
       callback(validationRes.isValid, validationRes.formData);
     }, $scope);
+    EventBus.listeners['org.ekstep.questionunit.reorder:editquestion'] = [];
+    ecEditor.addEventListener('org.ekstep.questionunit.reorder:editquestion', $scope.editReorderQuestion, $scope);
+    ecEditor.dispatchEvent("org.ekstep.questionunit:ready");
+  }
+  $scope.editReorderQuestion = function (event, data) {
+    var qdata = data.data;
+    $scope.reorderingFormData.question = qdata.question;
+    $scope.reorderingFormData.sentence = qdata.sentence;
+    $scope.$safeApply();
   }
   /**
    * check form validation
