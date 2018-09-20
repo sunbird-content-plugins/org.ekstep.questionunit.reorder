@@ -94,7 +94,7 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
       state: {
         val: answerArray
       },
-      score: correctAnswer ? 1 : 0,
+      score: correctAnswer ? this._question.config.max_score : 0,
       values: telemetryAnsArr,
       noOfCorrectAns: numOfCorrectAns, //tempCount,
       totalAns: 1
