@@ -67,10 +67,8 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
     ReorderingController.question = this._question; // eslint-disable-line no-undef
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESS); // eslint-disable-line no-undef
     // ReorderingController.renderQuestion();
-    if (!this._question.state) {
-      this._userWords = [];
-    } else {
-      this._userWords = [];
+    this._userWords = [];
+    if (this._question.state) {
       var temp = this._question.state.val;
       _.each(temp, function (v, i) {
         ReorderingController.wordClick(v.id);
