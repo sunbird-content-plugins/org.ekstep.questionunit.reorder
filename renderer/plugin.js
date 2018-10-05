@@ -28,7 +28,6 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
   preQuestionShow: function (event) {
     this._super(event);
     this._question.template = ReorderingController.getQuestionTemplate(); // eslint-disable-line no-undef
-    this._userWords = [];
   },
   /**
    * function to handle tabs(words) onclick event
@@ -67,6 +66,16 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
   postQuestionShow: function (event) { // eslint-disable-line no-unused-vars
     ReorderingController.question = this._question; // eslint-disable-line no-undef
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESS); // eslint-disable-line no-undef
+    // ReorderingController.renderQuestion();
+    if (!this._question.state) {
+      this._userWords = [];
+    } else {
+      this._userWords = [];
+      var temp = this._question.state.val;
+      _.each(temp, function (v, i) {
+        ReorderingController.wordClick(v.id);
+      })
+    }
   },
   /**
    * renderer:questionunit.reorder:evaluateEventListener.
@@ -92,9 +101,9 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
     var result = {
       eval: correctAnswer,
       state: {
-        val: answerArray
+        val: this._userWords
       },
-      score: correctAnswer ? 1 : 0,
+      score: correctAnswer ? this._question.config.max_score : 0,
       values: telemetryAnsArr,
       noOfCorrectAns: numOfCorrectAns, //tempCount,
       totalAns: 1
