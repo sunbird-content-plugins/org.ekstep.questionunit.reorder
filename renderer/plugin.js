@@ -28,6 +28,11 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
   preQuestionShow: function (event) {
     this._super(event);
     this._question.template = ReorderingController.getQuestionTemplate(); // eslint-disable-line no-undef
+    if (this._question.state) {
+      this._question.data.sentence.tabs = this._question.state.keys;
+    } else {
+      this._question.data.sentence.tabs = _.shuffle(this._question.data.sentence.tabs);
+    }
   },
   /**
    * function to handle tabs(words) onclick event
@@ -99,7 +104,8 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
     var result = {
       eval: correctAnswer,
       state: {
-        val: this._userWords
+        val: this._userWords,
+        keys: this._question.data.sentence.tabs
       },
       score: correctAnswer ? this._question.config.max_score : 0,
       values: telemetryAnsArr,

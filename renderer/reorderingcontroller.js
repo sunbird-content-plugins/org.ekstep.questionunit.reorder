@@ -17,7 +17,7 @@ ReorderingController.getQuestionTemplate = function () {
     <div class="reorder-table reorder-keyboard">\
       <div class="reorder-table-cell">\
         <div class="reorder-tabContainer reorder-scroll">\
-        <% _.each(_.shuffle(question.data.sentence.tabs),function(val,key){ %>\
+        <% _.each(question.data.sentence.tabs,function(val,key){ %>\
           <span onclick="ReorderingController.wordClick(\'w<%= val.id %>\', event)" class="reorder-words-tabs" id="w<%= val.id %>"><%= val.text %></span>\
         <% });%>\
         </div>\
