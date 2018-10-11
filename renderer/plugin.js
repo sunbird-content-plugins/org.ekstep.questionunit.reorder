@@ -119,8 +119,6 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
       callback(result);
     }
 
-    this.saveQuestionState(result.state);
-
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.RESPONSE, {
       "type": "INPUT",
       "values": telemetryAnsArr
