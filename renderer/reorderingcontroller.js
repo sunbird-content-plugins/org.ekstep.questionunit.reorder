@@ -12,13 +12,13 @@ ReorderingController.getQuestionTemplate = function () {
     <div class="reorder-gutter1"></div>\
     <div class="reorder-table" id="reorder-editor">\
       <textarea class="reorder-table-cell" id="reorder-tarea" readonly></textarea>\
-      <img class="reorder-table-cell" id="reorder-backspace" onclick="ReorderingController.backspaceClick()" src="<%=ReorderingController.pluginInstance.getAudioIcon("renderer/assets/backspace.png") %>">\
+      <img class="reorder-table-cell" id="reorder-backspace" onclick="ReorderingController.backspaceClick(event)" src="<%=ReorderingController.pluginInstance.getAudioIcon("renderer/assets/backspace.png") %>">\
     </div>\
     <div class="reorder-table reorder-keyboard">\
       <div class="reorder-table-cell">\
         <div class="reorder-tabContainer reorder-scroll">\
-        <% _.each(_.shuffle(question.data.sentence.tabs),function(val,key){ %>\
-          <span onclick="ReorderingController.wordClick(\'w<%= val.id %>\')" class="reorder-words-tabs" id="w<%= val.id %>"><%= val.text %></span>\
+        <% _.each(question.data.sentence.tabs,function(val,key){ %>\
+          <span onclick="ReorderingController.wordClick(\'w<%= val.id %>\', event)" class="reorder-words-tabs" id="w<%= val.id %>"><%= val.text %></span>\
         <% });%>\
         </div>\
       </div>\
@@ -31,10 +31,13 @@ ReorderingController.getQuestionTemplate = function () {
  * @event renderer:questionunit.reorder:show
  * @memberof org.ekstep.questionunit.reorder
  */
-ReorderingController.wordClick = function (id) {
+ReorderingController.wordClick = function (id, event) {
   if (!$("#" + id).hasClass('reorder-active')) {
     $("#" + id).addClass('reorder-active reorder-remove-shadow');
     ReorderingController.pluginInstance.onWordSelect($("#" + id).attr('id'));
+  }
+  if (event) {
+    ReorderingController.logTelemetryInteract(event)
   }
 };
 
@@ -43,8 +46,9 @@ ReorderingController.wordClick = function (id) {
  * @event renderer:questionunit.reorder:show
  * @memberof org.ekstep.questionunit.reorder
  */
-ReorderingController.backspaceClick = function () {
+ReorderingController.backspaceClick = function (event) {
   ReorderingController.pluginInstance.onBackspaceClick();
+  ReorderingController.logTelemetryInteract(event)
 };
 
 /**
