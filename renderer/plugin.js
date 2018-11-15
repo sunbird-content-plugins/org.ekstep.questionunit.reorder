@@ -96,7 +96,7 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
       return w.text;
     }).join(' ');
     /*istanbul ignore else*/
-    if (userText.replace(/[ ]/g, '') === this._question.data.sentence.text.trim().replace(/[ ]/g, '')) { // eslint-disable-line no-undef
+    if (userText.replace(/\s/g, '') === this._question.data.sentence.text.trim().replace(/\s/g, '')) { // eslint-disable-line no-undef
       correctAnswer = true;
       numOfCorrectAns = 1;
     }
@@ -118,8 +118,6 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
     if (_.isFunction(callback)) {
       callback(result);
     }
-
-    this.saveQuestionState(result.state);
 
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.RESPONSE, {
       "type": "INPUT",
