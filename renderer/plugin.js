@@ -107,6 +107,7 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
         val: this._userWords,
         keys: this._question.data.sentence.tabs
       },
+      max_score: this._question.config.max_score,
       score: correctAnswer ? this._question.config.max_score : 0,
       values: telemetryAnsArr,
       noOfCorrectAns: numOfCorrectAns, //tempCount,
@@ -123,6 +124,7 @@ org.ekstep.questionunitReorder.RendererPlugin = org.ekstep.contentrenderer.quest
       "type": "INPUT",
       "values": telemetryAnsArr
     }); // eslint-disable-line no-undef
+    QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESSEND, result); // eslint-disable-line no-undef
   }
 });
 //# sourceURL=ReorderingRendererPlugin.js
