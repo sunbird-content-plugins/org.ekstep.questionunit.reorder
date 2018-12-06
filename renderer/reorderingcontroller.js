@@ -11,7 +11,7 @@ ReorderingController.getQuestionTemplate = function () {
     '</div>\
     <div class="reorder-gutter1"></div>\
     <div class="reorder-table" id="reorder-editor">\
-      <textarea class="reorder-table-cell" id="reorder-tarea" readonly></textarea>\
+      <div id="reorder-tarea"></div>\
       <img class="reorder-table-cell" id="reorder-backspace" onclick="ReorderingController.backspaceClick(event)" src="<%=ReorderingController.pluginInstance.getAudioIcon("renderer/assets/backspace.png") %>">\
     </div>\
     <div class="reorder-table reorder-keyboard">\
