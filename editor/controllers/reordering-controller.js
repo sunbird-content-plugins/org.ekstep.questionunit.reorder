@@ -36,14 +36,26 @@ angular.module('reorderingApp', ['org.ekstep.question']).controller('reorderingQ
     $scope.reorderingFormData.question.text = this.getData();
   });
   $scope.updateSentence = function () {
+    $scope.reorderingFormData.sentence.tabs = []
     var sentence = $scope.reorderingFormData.sentence.text;
-    var nonAlphaNum = sentence.match(/[^a-zA-Z0-9\n ]/g);
-    _.each(nonAlphaNum, function (t) {
-      var exp = new RegExp('\\' + t, 'g');
-      sentence = sentence.replace(exp, ' ' + t);
+    var splitWords = sentence.split(' ');
+    var nonAlphaNum = [',', '.', '?'];
+    var exp = new RegExp('[' + nonAlphaNum.join('') + ']', 'g');
+    var modifiedSplitWords = [];
+    _.each(splitWords, function (t) {
+      var match = t.match(exp)
+      if (match) {
+        _.each(match, function (m) {
+          t = t.replace(m, ' ' + m)
+        })
+        modifiedSplitWords.push(t);
+      } else {
+        temp = false;
+        modifiedSplitWords.push(t);
+      }
     });
-    $scope.reorderingFormData.sentence.tabs = [];
-    var words = sentence.split(' ');
+    var readyWords = modifiedSplitWords.join(' ');
+    var words = readyWords.split(' ')
     _.each(words, function (w, i) {
       if (w.length > 0) {
         $scope.reorderingFormData.sentence.tabs.push({
