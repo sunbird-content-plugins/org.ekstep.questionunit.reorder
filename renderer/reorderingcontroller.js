@@ -5,7 +5,7 @@ ReorderingController.initTemplate = function (pluginInstance) {
 
 ReorderingController.getQuestionTemplate = function () {
   return '\
-  <div class="reorder-screen reorder-table" onselectstart="return false">\
+  <div class="reorder-screen reorder-table plugin-content-container" onselectstart="return false">\
     <div class="reorder-question">' +
     org.ekstep.questionunit.questionComponent.generateQuestionComponent() +
     '</div>\
